@@ -6,25 +6,21 @@
     "types": ["node"],
     "rootDir": "src",
     "moduleResolution": "nodenext",
-    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
+    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "es2021"
   },
   "include": ["src/**/*.ts"],
   "exclude": [
     "out-tsc",
     "dist",
     "jest.config.ts",
+    "jest.config.cts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts",
     "eslint.config.js",
     "eslint.config.cjs",
     "eslint.config.mjs"
-  ],
-  "references": [
-    {
-      "path": "../../libs/shared/models/tsconfig.lib.json"
-    },
-    {
-      "path": "../../libs/api/products/tsconfig.lib.json"
-    }
   ]
 }
