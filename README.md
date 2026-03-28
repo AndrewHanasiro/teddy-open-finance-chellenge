@@ -31,37 +31,10 @@ This repository demonstrates a production-ready React monorepo with:
 ## 🚀 Quick Start
 
 ```bash
-# Clone the repository
-git clone <your-fork-url>
-cd <your-repository-name>
-
-# Install dependencies
-npx install
-
-# Serve the React shop application (this will simultaneously serve the API backend)
-npx nx serve shop
-
-# ...or you can serve the API separately
-npx nx serve api
-
-# Build all projects
-npx nx run-many -t build
-
-# Run tests
-npx nx run-many -t test
-
-# Lint all projects
-npx nx run-many -t lint
-
-# Run e2e tests
-npx nx e2e shop-e2e
-
-# Run tasks in parallel
-
-npx nx run-many -t lint test build e2e --parallel=3
-
-# Visualize the project graph
-npx nx graph
+# Serve the Next and Nest (this will simultaneously serve the API backend)
+docker compose up -d 
+nx serve api
+nx dev front
 ```
 
 ## ⭐ Featured Nx Capabilities

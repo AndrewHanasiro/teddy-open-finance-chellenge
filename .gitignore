@@ -50,3 +50,7 @@ test-output
 .claude/worktrees
 .claude/settings.local.json
 .nx/polygraph
+
+# Next.js
+.next
+out
