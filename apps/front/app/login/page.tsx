@@ -53,7 +53,7 @@ export default function LoginPage() {
               className="w-full rounded-sm border border-gray-300 bg-[#fdfdfd] px-4 py-3 text-gray-600 outline-none transition-focus focus:border-orange-500"
             />
             <input
-              type="text"
+              type="password"
               placeholder="Digite sua senha"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

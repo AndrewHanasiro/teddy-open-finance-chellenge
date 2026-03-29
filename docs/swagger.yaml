@@ -1,0 +1,172 @@
+openapi: 3.0.3
+info:
+  title: API
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: http://localhost
+paths:
+  /api:
+    get:
+      summary: Hello
+      description: Hello
+      operationId: hello
+      responses:
+        '200':
+          description: ''
+  /api/health:
+    get:
+      summary: Health
+      description: Health
+      operationId: health
+      responses:
+        '200':
+          description: ''
+  /api/auth/register:
+    post:
+      summary: Register
+      description: Register
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: a@a.com
+                name:
+                  type: string
+                  example: Andand
+                password:
+                  type: string
+                  example: '123456'
+            examples:
+              Register:
+                value:
+                  email: a@a.com
+                  name: Andand
+                  password: '123456'
+      responses:
+        '200':
+          description: ''
+  /api/auth/login:
+    post:
+      summary: Login
+      description: Login
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: a@a.com
+                password:
+                  type: string
+                  example: '123456'
+            examples:
+              Login:
+                value:
+                  email: a@a.com
+                  password: '123456'
+      responses:
+        '200':
+          description: ''
+  /api/clients:
+    get:
+      summary: List Clients
+      description: List Clients
+      operationId: listClients
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+    post:
+      summary: Create Client
+      description: Create Client
+      operationId: createClient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: a@a.com
+                name:
+                  type: string
+                  example: employee9
+                salary:
+                  type: number
+                  example: 123123
+                valuation:
+                  type: number
+                  example: 987765
+            examples:
+              Create Client:
+                value:
+                  email: a@a.com
+                  name: employee9
+                  salary: 123123
+                  valuation: 987765
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+  /api/clients/019d3694-774f-7ee9-aae3-9e6fd0569ef6:
+    put:
+      summary: Update Client
+      description: Update Client
+      operationId: updateClient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: a@a.com
+                name:
+                  type: string
+                  example: employee2
+                salary:
+                  type: number
+                  example: 1111111
+                valuation:
+                  type: number
+                  example: 987765
+            examples:
+              Update Client:
+                value:
+                  email: a@a.com
+                  name: employee2
+                  salary: 1111111
+                  valuation: 987765
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+    delete:
+      summary: Delete Client
+      description: Delete Client
+      operationId: DeleteClient
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags: []
