@@ -6,6 +6,9 @@ import { User } from '../../entities/user.entity';
 import { Repository } from 'typeorm';
 import { UnauthorizedException, ConflictException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { randEmail, randFullName, randPassword, randUuid } from '@ngneat/falso';
+
+jest.mock('bcrypt');
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -13,11 +16,13 @@ describe('AuthService', () => {
   let jwtService: JwtService;
 
   const mockUser = {
-    id: 'uuid-123',
-    email: 'test@example.com',
-    password: 'hashedPassword',
-    name: 'Test User',
+    publicId: randUuid(),
+    email: randEmail(),
+    password: randPassword(),
+    name: randFullName(),
   };
+
+  const token = randPassword();
 
   const mockUserRepository = {
     findOne: jest.fn(),
@@ -26,7 +31,7 @@ describe('AuthService', () => {
   };
 
   const mockJwtService = {
-    sign: jest.fn().mockReturnValue('mock_token'),
+    sign: jest.fn().mockReturnValue(token),
   };
 
   beforeEach(async () => {
@@ -59,15 +64,19 @@ describe('AuthService', () => {
       jest.spyOn(bcrypt, 'compare').mockImplementation(async () => true);
 
       const result = await service.login({
-        email: 'test@example.com',
-        password: 'password123',
+        email: mockUser.email,
+        password: mockUser.password,
       });
 
       expect(result).toEqual({
-        access_token: 'mock_token',
-        user: { id: mockUser.id, name: mockUser.name, email: mockUser.email },
+        access_token: token,
+        user: {
+          id: mockUser.publicId,
+          name: mockUser.name,
+          email: mockUser.email,
+        },
       });
-      expect(jwtService.signAsync).toHaveBeenCalled();
+      expect(jwtService.sign).toHaveBeenCalled();
     });
 
     it('should throw UnauthorizedException if password does not match', async () => {
@@ -89,11 +98,7 @@ describe('AuthService', () => {
       jest.spyOn(userRepository, 'create').mockReturnValue(mockUser as User);
       jest.spyOn(userRepository, 'save').mockResolvedValue(mockUser as User);
 
-      const result = await service.register(
-        'new@example.com',
-        'pass123',
-        'New User',
-      );
+      const result = await service.register(randEmail(), 'pass123', 'New User');
 
       expect(result).not.toHaveProperty('password');
       expect(result.email).toBe(mockUser.email);

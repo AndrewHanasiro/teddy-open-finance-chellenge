@@ -1,5 +1,5 @@
 'use client';
-
+import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/auth.context';
 import { useRouter } from 'next/navigation';
@@ -38,7 +38,6 @@ export default function ClientListPage() {
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
-  const [error, setError] = useState<string>('');
   const { token, isAuthenticated } = useAuth();
   const { clientList, add, remove } = useClientSelect();
   const router = useRouter();
@@ -68,10 +67,10 @@ export default function ClientListPage() {
         const data: Pagination = await response.json();
         setPagination(data);
       } else {
-        setError('Failed to fetch clients');
+        toast('Failed to fetch clients');
       }
     } catch {
-      setError('An error occurred while fetching clients.');
+      toast('An error occurred while fetching clients.');
     }
   };
 
@@ -90,10 +89,10 @@ export default function ClientListPage() {
       if (response.ok) {
         fetchClients();
       } else {
-        setError('Failed to fetch clients');
+        toast('Failed to fetch clients');
       }
     } catch {
-      setError('An error occurred while fetching clients.');
+      toast('An error occurred while fetching clients.');
     }
   };
 

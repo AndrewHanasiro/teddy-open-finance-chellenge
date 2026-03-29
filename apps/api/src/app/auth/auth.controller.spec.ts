@@ -4,10 +4,8 @@ import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { randEmail, randFullName, randPassword, randUuid } from '@ngneat/falso';
 import { JwtStrategy } from './jwt.strategy';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../../entities/user.entity';
 
-describe('AppController', () => {
+describe('AuthController', () => {
   let app: TestingModule;
   let controller: AuthController;
   let authService: AuthService;

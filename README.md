@@ -17,3 +17,20 @@ nx dev front
 docker compose down
 docker volume prune --all --force
 ```
+
+## How to run test
+```bash
+# Backend
+nx test api # unit test
+nx e2e api-e2e # e2e test
+
+# Frontend 
+nx test front # unit test
+nx e2e front-e2e # e2e test
+```
+
+## How to run lint
+```bash
+# Backend
+nx lint api # unit test
+```

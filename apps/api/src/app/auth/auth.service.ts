@@ -61,7 +61,7 @@ export class AuthService {
     return result;
   }
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<string> {
     try {
       const resp = await this.login({ email, password });
       return resp.access_token;

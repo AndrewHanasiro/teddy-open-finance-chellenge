@@ -1,4 +1,4 @@
-import { IsEmail, IsInt, IsNotEmpty, IsOptional, IsString, Max, Min, IsNumber } from 'class-validator';
+import { IsEmail, IsInt, IsNotEmpty, IsOptional, IsString, Max, Min, IsNumber, IsPositive } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ClientDto {
@@ -12,10 +12,12 @@ export class ClientDto {
 
   @IsNumber()
   @IsNotEmpty()
+  @IsPositive()
   salary!: number;
 
   @IsNumber()
   @IsNotEmpty()
+  @IsPositive()
   valuation!: number;
 }
 

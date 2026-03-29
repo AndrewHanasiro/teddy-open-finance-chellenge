@@ -1,6 +1,7 @@
 import React, { SubmitEvent, useState } from 'react';
 import { X } from 'lucide-react';
 import { useAuth } from '../context/auth.context';
+import toast from 'react-hot-toast';
 
 interface SideNavProps {
   isOpen: boolean;
@@ -18,12 +19,10 @@ const UpdateModal = ({ isOpen, onClose, input }: SideNavProps) => {
   const [name, setName] = useState(input.name);
   const [salary, setSalary] = useState(input.salary);
   const [valuation, setValuation] = useState(input.valuation);
-  const [error, setError] = useState<string>('');
   const { token } = useAuth();
 
   const handleUpdateClient = async (e: SubmitEvent) => {
     e.preventDefault();
-    setError('');
 
     try {
       const response = await fetch('http://localhost:3000/api/clients', {
@@ -48,10 +47,10 @@ const UpdateModal = ({ isOpen, onClose, input }: SideNavProps) => {
         onClose();
       } else {
         const data = await response.json();
-        setError(data.message || 'Failed to add client');
+        toast(data.message || 'Failed to add client');
       }
-    } catch {
-      setError('An error occurred while adding client.');
+    } catch (err){
+      toast(`An error occurred while updating client: ${(err as Error).message}`);
     }
   };
   if (!isOpen) return null;

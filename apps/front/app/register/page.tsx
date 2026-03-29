@@ -1,18 +1,16 @@
 'use client';
-
-import { useState, FormEvent } from 'react';
+import toast from 'react-hot-toast';
+import { useState, SubmitEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
   const router = useRouter();
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    setError('');
 
     try {
       const response = await fetch('http://localhost:3000/api/auth/register', {
@@ -25,10 +23,11 @@ export default function RegisterPage() {
         router.push('/login');
       } else {
         const data = await response.json();
-        setError(data.message || 'Registration failed');
+        toast(data.message || 'Registration failed');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      console.error(err);
+      toast('An error occurred. Please try again.');
     }
   };
 
@@ -66,8 +65,6 @@ export default function RegisterPage() {
               className="w-full rounded-sm border border-gray-300 bg-[#fdfdfd] px-4 py-3 text-gray-600 outline-none transition-focus focus:border-orange-500"
             />
           </div>
-
-          {error && <p className="text-sm text-red-500">{error}</p>}
 
           <button
             type="submit"
