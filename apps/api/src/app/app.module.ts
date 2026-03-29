@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ClientsModule } from './clients/clients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Client } from '../entities/client.entity';
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -15,10 +16,12 @@ import { Client } from '../entities/client.entity';
       password: 'root_passsword',
       database: 'teddy-challenge',
       entities: [User, Client],
-      synchronize: true,
+      synchronize: false,
     }),
     AuthModule,
     ClientsModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

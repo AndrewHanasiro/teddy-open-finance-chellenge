@@ -4,9 +4,9 @@ import baseConfig from '../../eslint.config.mjs';
 
 export default [
   { plugins: { '@next/next': nextEslintPluginNext } },
-  ...baseConfig,
   ...nx.configs['flat/react-typescript'],
+  ...baseConfig,
   {
-    ignores: ['.next/**/*', '**/out-tsc'],
+    ignores: ['.next/**/*'],
   },
 ];

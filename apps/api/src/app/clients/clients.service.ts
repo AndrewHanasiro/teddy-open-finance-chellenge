@@ -8,7 +8,7 @@ import { ClientDto, PaginationDto } from './clients.dto';
 export class ClientsService {
   constructor(
     @InjectRepository(Client)
-    private readonly clientRepository: Repository<Client>
+    private readonly clientRepository: Repository<Client>,
   ) {}
 
   async create(createClientDto: ClientDto) {
@@ -19,7 +19,7 @@ export class ClientsService {
   async findAll(paginationDto: PaginationDto) {
     const { page = 1, limit = 10 } = paginationDto;
     const [data, total] = await this.clientRepository.findAndCount({
-      select: ['id', 'name'],
+      select: ['publicId', 'email', 'name', 'salary', 'valuation'],
       take: limit,
       skip: (page - 1) * limit,
     });
@@ -32,20 +32,20 @@ export class ClientsService {
     };
   }
 
-  async findOne(id: string) {
-    const client = await this.clientRepository.findOne({ where: { id } });
+  async findOne(publicId: string) {
+    const client = await this.clientRepository.findOne({ where: { publicId } });
     if (!client) throw new NotFoundException('Client not found');
     return client;
   }
 
-  async update(id: string, updateClientDto: ClientDto) {
-    await this.findOne(id);
-    await this.clientRepository.update(id, updateClientDto);
-    return this.findOne(id);
+  async update(publicId: string, updateClientDto: ClientDto) {
+    await this.findOne(publicId);
+    await this.clientRepository.update({ publicId }, updateClientDto);
+    return this.findOne(publicId);
   }
 
-  async remove(id: string) {
-    const client = await this.findOne(id);
+  async remove(publicId: string) {
+    const client = await this.findOne(publicId);
     return await this.clientRepository.softRemove(client);
   }
 }

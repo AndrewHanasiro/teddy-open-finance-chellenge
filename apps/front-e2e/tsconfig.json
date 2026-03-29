@@ -2,8 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
-    "outDir": "out-tsc/playwright",
-    "sourceMap": false
+    "outDir": "../../dist/out-tsc",
+    "sourceMap": false,
+    "module": "commonjs"
   },
   "include": [
     "**/*.ts",
@@ -14,12 +15,5 @@
     "src/**/*.test.ts",
     "src/**/*.test.js",
     "src/**/*.d.ts"
-  ],
-  "exclude": [
-    "out-tsc",
-    "test-output",
-    "eslint.config.js",
-    "eslint.config.mjs",
-    "eslint.config.cjs"
   ]
 }

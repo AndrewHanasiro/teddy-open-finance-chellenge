@@ -1,33 +1,38 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from '../../entities/user.entity';
+import { LoginDto } from './auth.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
-  async login(email: string, pass: string) {
+  async login(loginDto: LoginDto) {
     const user = await this.userRepository.findOne({
-      where: { email },
-      select: ['id', 'password', 'email', 'name'], // password is hidden by default in the entity
+      where: { email: loginDto.email },
+      select: ['id', 'publicId', 'password', 'email', 'name'],
     });
 
-    if (!user || !(await bcrypt.compare(pass, user.password))) {
+    if (!user || !(await bcrypt.compare(loginDto.password, user.password))) {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.publicId, email: user.email };
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: this.jwtService.sign(payload),
       user: {
-        id: user.id,
+        id: user.publicId,
         name: user.name,
         email: user.email,
       },
@@ -35,8 +40,10 @@ export class AuthService {
   }
 
   async register(email: string, pass: string, name: string) {
-    const existingUser = await this.userRepository.findOne({ where: { email } });
-    
+    const existingUser = await this.userRepository.findOne({
+      where: { email },
+    });
+
     if (existingUser) {
       throw new ConflictException('User with this email already exists');
     }
@@ -52,5 +59,14 @@ export class AuthService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = savedUser;
     return result;
+  }
+
+  async validateUser(email: string, password: string): Promise<any> {
+    try {
+      const resp = await this.login({ email, password });
+      return resp.access_token;
+    } catch {
+      return null;
+    }
   }
 }

@@ -1,9 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryColumn, Column, CreateDateColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn()
   id!: string;
+
+  @Column({ name: 'public_id' })
+  publicId!: string;
 
   @Column()
   name!: string;
@@ -11,7 +14,7 @@ export class User {
   @Column({ unique: true })
   email!: string;
 
-  @Column({ select: false }) // Hide password by default
+  @Column({ select: false })
   password!: string;
 
   @CreateDateColumn()

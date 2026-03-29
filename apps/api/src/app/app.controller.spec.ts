@@ -12,10 +12,15 @@ describe('AppController', () => {
     }).compile();
   });
 
-  describe('getData', () => {
-    it('should return "Hello API"', () => {
+  describe('endpoints', () => {
+    it('/', () => {
       const appController = app.get<AppController>(AppController);
-      expect(appController.health()).toEqual({ message: 'Hello API' });
+      expect(appController.getData()).toEqual({ message: 'Hello API' });
+    });
+    it('/health', () => {
+      const appController = app.get<AppController>(AppController);
+      expect(appController.healthCheck()).toEqual({ message: 'server Ok' });
     });
   });
+
 });
