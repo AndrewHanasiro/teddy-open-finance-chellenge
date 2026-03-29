@@ -155,15 +155,22 @@ paths:
           description: ''
       security:
         - bearerAuth: []
+  /api/clients/{userId}:
     delete:
       summary: Delete Client
       description: Delete Client
-      operationId: DeleteClient
+      operationId: deleteClient
       responses:
         '200':
           description: ''
       security:
         - bearerAuth: []
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
 components:
   securitySchemes:
     bearerAuth:

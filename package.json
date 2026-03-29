@@ -26,6 +26,7 @@
     "react-dom": "^19.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
+    "supertest": "^7.2.2",
     "typeorm": "^0.3.28"
   },
   "devDependencies": {
@@ -34,6 +35,7 @@
     "@nestjs/testing": "^11.0.0",
     "@next/eslint-plugin-next": "^16.1.6",
     "@nx/devkit": "22.6.3",
+    "@nx/docker": "^22.6.3",
     "@nx/eslint": "22.6.3",
     "@nx/eslint-plugin": "22.6.3",
     "@nx/jest": "22.6.3",

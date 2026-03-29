@@ -2,25 +2,28 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
-import { randEmail, randFullName, randPassword } from '@ngneat/falso';
+import { randEmail, randFullName, randPassword, randUuid } from '@ngneat/falso';
 import { JwtStrategy } from './jwt.strategy';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../entities/user.entity';
 
 describe('AppController', () => {
   let app: TestingModule;
-  const payloadR = {
+  let controller: AuthController;
+  let authService: AuthService;
+
+  const mockUser = {
+    id: randUuid(),
     email: randEmail(),
     password: randPassword(),
     name: randFullName(),
-  } satisfies RegisterDto;
+  };
 
+  const mockLoginResponse = {
+    access_token: 'mock_token',
+    user: mockUser,
+  };
   beforeAll(async () => {
-    const mockLoginResponse = {
-      access_token: 'mock_token',
-      user: mockUser,
-    };
-
     // Mock implementation of AuthService
     const mockAuthService = {
       login: jest.fn().mockResolvedValue(mockLoginResponse),
@@ -32,66 +35,46 @@ describe('AppController', () => {
         AuthService,
         JwtStrategy,
         {
-          provide: 'JwtService',
-          useValue: {
-            sign: jest.fn().mockReturnValue('mock-token'),
-            verify: jest.fn(),
-          },
-        },
-        {
-          provide: getRepositoryToken(User),
-          useValue: {
-            save: jest.fn().mockImplementation((user) =>
-              Promise.resolve({
-                ...user,
-                id: '1',
-                publicId: 'uuid',
-                created_at: new Date(),
-              }),
-            ),
-            findOne: jest.fn().mockImplementation((user) =>
-              Promise.resolve({
-                ...user,
-                id: '1',
-                publicId: 'uuid',
-                created_at: new Date(),
-              }),
-            ),
-          },
+          provide: AuthService,
+          useValue: mockAuthService,
         },
       ],
     }).compile();
+    controller = app.get<AuthController>(AuthController);
+    authService = app.get<AuthService>(AuthService);
   });
 
   describe('endpoints /auth', () => {
-    it('/register', () => {
-      const appController = app.get<AuthController>(AuthController);
-      expect(appController.register(payloadR)).toEqual({
-        id: expect.any(String),
-        publicId: expect.any(String),
-        name: payloadR.name,
-        email: payloadR.email,
-        created_at: expect.any(Date),
+    it('/login', async () => {
+      const loginDto: LoginDto = {
+        email: 'test@example.com',
+        password: 'password123',
+      };
+
+      const result = await controller.login(loginDto);
+
+      expect(authService.login).toHaveBeenCalledWith({
+        email: loginDto.email,
+        password: loginDto.password,
       });
+      expect(result).toEqual(mockLoginResponse);
     });
 
-    it('/login', async () => {
-      const appController = app.get<AuthController>(AuthController);
-      await appController.register(payloadR);
+    it('/register', async () => {
+      const registerDto: RegisterDto = {
+        email: 'new@example.com',
+        password: 'password123',
+        name: 'New User',
+      };
 
-      const payloadL = {
-        email: payloadR.email,
-        password: payloadR.password,
-      } satisfies LoginDto;
+      const result = await controller.register(registerDto);
 
-      expect(appController.login(payloadL)).toEqual({
-        access_token: expect.any(String),
-        user: expect.objectContaining({
-          id: expect.any(String),
-          email: payloadR.email,
-          name: payloadR.name,
-        }),
-      });
+      expect(authService.register).toHaveBeenCalledWith(
+        registerDto.email,
+        registerDto.password,
+        registerDto.name,
+      );
+      expect(result).toEqual(mockUser);
     });
   });
 });
