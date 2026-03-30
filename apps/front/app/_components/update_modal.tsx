@@ -95,6 +95,7 @@ const UpdateModal = ({ isOpen, onClose, input }: SideNavProps) => {
           <input
             type="number"
             step={0.01}
+            min={0}
             value={salary}
             onChange={(e) => {
               setSalary(Number(e.target.value));
@@ -105,6 +106,7 @@ const UpdateModal = ({ isOpen, onClose, input }: SideNavProps) => {
           <input
             type="number"
             step={0.01}
+            min={0}
             value={valuation}
             onChange={(e) => {
               setValuation(Number(e.target.value));

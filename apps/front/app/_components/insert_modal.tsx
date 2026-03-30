@@ -96,6 +96,7 @@ const InsertModal = ({
             type="number"
             step={0.01}
             value={salary}
+            min={0}
             onChange={(e) => {
               setSalary(Number(e.target.value));
             }}
@@ -105,6 +106,7 @@ const InsertModal = ({
           <input
             type="number"
             step={0.01}
+            min={0}
             value={valuation}
             onChange={(e) => {
               setValuation(Number(e.target.value));
