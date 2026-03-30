@@ -6,7 +6,7 @@ import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await otelSDK.start();
+  otelSDK.start();
   const globalPrefix = 'api';
   app.useLogger(app.get(Logger));
   app.enableCors();

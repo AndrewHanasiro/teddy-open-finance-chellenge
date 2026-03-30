@@ -8,6 +8,8 @@ import { User } from '../entities/user.entity';
 import { Client } from '../entities/client.entity';
 import { LoggerModule } from 'nestjs-pino';
 import { OpenTelemetryModule } from 'nestjs-otel';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
 
 @Module({
   imports: [
@@ -21,6 +23,18 @@ import { OpenTelemetryModule } from 'nestjs-otel';
       database: 'teddy-challenge',
       entities: [User, Client],
       synchronize: false,
+    }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async () => ({
+        store: await redisStore({
+          socket: {
+            host: 'localhost',
+            port: 6379,
+          },
+          ttl: 600, // Time to live in seconds
+        }),
+      }),
     }),
     OpenTelemetryModule.forRoot({
       metrics: {

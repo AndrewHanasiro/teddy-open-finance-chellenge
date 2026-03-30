@@ -8,13 +8,15 @@ import {
   Delete,
   Query,
   UseGuards,
+  UseInterceptors
 } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { ClientDto, PaginationDto } from './clients.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 @UseGuards(JwtAuthGuard)
 @Controller('clients')
+@UseInterceptors(CacheInterceptor)
 export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
 
@@ -24,6 +26,8 @@ export class ClientsController {
   }
 
   @Get()
+  @CacheKey('all_users')
+  @CacheTTL(600)
   findAll(@Query() paginationDto: PaginationDto) {
     return this.clientsService.findAll(paginationDto);
   }

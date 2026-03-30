@@ -1,6 +1,8 @@
 # Teddy Open Finance Challenge
 
-## How to run locally
+## Commands
+
+### How to run locally
 
 ```bash
 # Raising infra and runnning migrations
@@ -17,7 +19,7 @@ nx dev front
 
 ```
 
-## How to reset everything
+### How to reset everything
 ```bash
 docker compose down
 docker volume prune --all --force
@@ -29,7 +31,7 @@ make down
 make reset
 ```
 
-## How to run test
+### How to run test
 ```bash
 # Backend
 nx test api # unit test
@@ -40,8 +42,16 @@ nx test front # unit test
 nx e2e front-e2e # e2e test, should be executing the backend in another terminal, make sure you reset the infra
 ```
 
-## How to run lint
+### How to run lint
 ```bash
 # Backend
 nx lint api # unit test
 ```
+
+## URLs
+front: http://localhost:5173
+api: http://localhost:3000
+prometheu: http://localhost:9090
+jaeger: http://localhost:16686
+grafana: http://localhost:3001
+
