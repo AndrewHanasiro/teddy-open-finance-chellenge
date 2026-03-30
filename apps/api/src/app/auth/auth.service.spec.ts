@@ -84,7 +84,7 @@ describe('AuthService', () => {
       jest.spyOn(bcrypt, 'compare').mockImplementation(async () => false);
 
       await expect(
-        service.login({ email: 'test@example.com', password: 'wrongpass' }),
+        service.login({ email: randFullName(), password: 'wrongpass' }),
       ).rejects.toThrow(UnauthorizedException);
     });
   });

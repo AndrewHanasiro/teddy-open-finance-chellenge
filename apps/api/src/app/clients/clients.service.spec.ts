@@ -4,17 +4,18 @@ import { Repository } from 'typeorm';
 import { ClientsService } from './clients.service';
 import { Client } from '../../entities/client.entity';
 import { NotFoundException } from '@nestjs/common';
+import { randAmount, randEmail, randFullName, randUuid } from '@ngneat/falso';
 
 describe('ClientsService', () => {
   let service: ClientsService;
   let repository: Repository<Client>;
 
   const mockClient = {
-    publicId: 'uuid-123',
-    name: 'John Doe',
-    email: 'john@example.com',
-    salary: 5000,
-    valuation: 10000,
+    publicId: randUuid(),
+    name: randFullName(),
+    email: randEmail(),
+    salary: randAmount(),
+    valuation: randAmount(),
   };
 
   const mockRepository = {
@@ -44,10 +45,10 @@ describe('ClientsService', () => {
   describe('create', () => {
     it('should successfully create a client', async () => {
       const dto = {
-        name: 'John',
-        email: 'john@test.com',
-        salary: 1,
-        valuation: 1,
+        name: randFullName(),
+        email: randEmail(),
+        salary: randAmount(),
+        valuation: randAmount(),
       };
       const result = await service.create(dto);
       expect(result).toEqual(mockClient);

@@ -45,8 +45,8 @@ describe('AuthController', () => {
   describe('endpoints /auth', () => {
     it('/login', async () => {
       const loginDto: LoginDto = {
-        email: 'test@example.com',
-        password: 'password123',
+        email: randEmail(),
+        password: randPassword(),
       };
 
       const result = await controller.login(loginDto);
@@ -60,9 +60,9 @@ describe('AuthController', () => {
 
     it('/register', async () => {
       const registerDto: RegisterDto = {
-        email: 'new@example.com',
-        password: 'password123',
-        name: 'New User',
+        email: randEmail(),
+        password: randPassword(),
+        name: randFullName(),
       };
 
       const result = await controller.register(registerDto);

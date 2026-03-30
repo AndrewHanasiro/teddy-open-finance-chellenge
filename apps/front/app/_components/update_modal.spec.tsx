@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import UpdateModal from './update_modal';
 import { useAuth } from '../context/auth.context';
 import toast from 'react-hot-toast';
+import { randAmount, randEmail, randFullName, randUuid } from '@ngneat/falso';
 
 // Mock dependencies
 jest.mock('react-hot-toast');
@@ -11,10 +12,11 @@ jest.mock('../context/auth.context', () => ({
 
 describe('UpdateModal Component', () => {
   const mockInput = {
-    name: 'Andrew Hanasiro',
-    email: 'andrew@example.com',
-    salary: 5000,
-    valuation: 100000,
+    name: randFullName(),
+    email: randEmail(),
+    salary: randAmount(),
+    valuation: randAmount(),
+    publicId: randUuid(),
   };
 
   const defaultProps = {
@@ -50,7 +52,7 @@ describe('UpdateModal Component', () => {
     render(<UpdateModal {...defaultProps} />);
 
     const backdrop = screen
-      .getByText('Criar cliente:')
+      .getByText('Atualizar cliente')
       .closest('div')?.parentElement;
     if (backdrop) {
       fireEvent.click(backdrop);
@@ -65,15 +67,15 @@ describe('UpdateModal Component', () => {
     (global.fetch as jest.Mock).mockResolvedValue({ ok: true });
 
     render(<UpdateModal {...defaultProps} />);
-
+    const newSalary = randAmount();
     const salaryInput = screen.getByPlaceholderText(/Digite o salário:/i);
-    fireEvent.change(salaryInput, { target: { value: '6000' } });
+    fireEvent.change(salaryInput, { target: { value: newSalary.toString() } });
 
     fireEvent.click(screen.getByRole('button', { name: /Atualizar/i }));
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:3000/api/clients',
+        `http://localhost:3000/api/clients/${mockInput.publicId}`,
         expect.objectContaining({
           method: 'PUT',
           headers: {
@@ -83,8 +85,8 @@ describe('UpdateModal Component', () => {
           body: JSON.stringify({
             email: mockInput.email,
             name: mockInput.name,
-            salary: 600000,
-            valuation: 10000000,
+            salary: newSalary * 100,
+            valuation: mockInput.valuation * 100,
           }),
         }),
       );
@@ -112,7 +114,7 @@ describe('UpdateModal Component', () => {
   it('should stop propagation on modal content click', () => {
     render(<UpdateModal {...defaultProps} />);
 
-    const modalContainer = screen.getByText('Criar cliente:').closest('div');
+    const modalContainer = screen.getByText('Atualizar cliente').closest('div');
     if (!modalContainer) {
       throw new Error('modalContainer not found');
     }

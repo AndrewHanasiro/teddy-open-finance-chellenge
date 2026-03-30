@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import InsertModal from './insert_modal';
 import toast from 'react-hot-toast';
+import { randAmount, randEmail, randFullName, randUuid } from '@ngneat/falso';
 
 jest.mock('react-hot-toast');
 jest.mock('../context/auth.context', () => ({
@@ -16,7 +17,13 @@ describe('InsertModal Component', () => {
     onClose: jest.fn(),
     'data-testid': 'insert-modal',
   };
-
+  const mockInput = {
+    name: randFullName(),
+    email: randEmail(),
+    salary: randAmount(),
+    valuation: randAmount(),
+    publicId: randUuid(),
+  };
   beforeEach(() => {
     jest.clearAllMocks();
     global.fetch = jest.fn();
@@ -67,17 +74,17 @@ describe('InsertModal Component', () => {
     render(<InsertModal {...defaultProps} />);
 
     fireEvent.change(screen.getByPlaceholderText(/Digite o email:/i), {
-      target: { value: 'test@example.com' },
+      target: { value: mockInput.email },
     });
     fireEvent.change(screen.getByPlaceholderText(/Digite o nome:/i), {
-      target: { value: 'John Doe' },
+      target: { value: mockInput.name },
     });
     fireEvent.change(screen.getByPlaceholderText(/Digite o salário:/i), {
-      target: { value: '1000' },
+      target: { value: mockInput.salary.toString() },
     });
     fireEvent.change(
       screen.getByPlaceholderText(/Digite o valor da empresa:/i),
-      { target: { value: '5000' } },
+      { target: { value: mockInput.valuation.toString() } },
     );
 
     fireEvent.click(screen.getByRole('button', { name: /Cadastrar/i }));
@@ -88,10 +95,10 @@ describe('InsertModal Component', () => {
         expect.objectContaining({
           method: 'POST',
           body: JSON.stringify({
-            email: 'test@example.com',
-            name: 'John Doe',
-            salary: 100000, // Converted to cents/integer
-            valuation: 500000,
+            email: mockInput.email,
+            name: mockInput.name,
+            salary: mockInput.salary * 100,
+            valuation: mockInput.valuation * 100,
           }),
         }),
       );

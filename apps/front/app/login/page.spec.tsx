@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/auth.context';
 // import toast from 'react-hot-toast';
 import '@testing-library/jest-dom';
+import { randFullName, randPassword, randUuid } from '@ngneat/falso';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -43,8 +44,8 @@ describe('LoginPage', () => {
 
   it('calls login context and redirects on successful login', async () => {
     const fakeResponse = {
-      access_token: 'fake-token-123',
-      user: { id: 1, name: 'Test User' },
+      access_token: randPassword(),
+      user: { id: randUuid(), name: randFullName() },
     };
 
     (global.fetch as jest.Mock).mockResolvedValueOnce({
