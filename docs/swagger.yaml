@@ -13,7 +13,48 @@ paths:
       operationId: hello
       responses:
         '200':
-          description: ''
+          description: Hello
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '23'
+            Date:
+              schema:
+                type: string
+                example: Sun, 29 Mar 2026 21:39:04 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"17-TzGXketnjihp27LBaxXaC/GQ4Cw"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Hello API
+              examples:
+                Hello:
+                  value:
+                    message: Hello API
   /api/health:
     get:
       summary: Health
@@ -21,7 +62,48 @@ paths:
       operationId: health
       responses:
         '200':
-          description: ''
+          description: Health
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '23'
+            Date:
+              schema:
+                type: string
+                example: Sun, 29 Mar 2026 21:39:11 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"17-ejd1M8c9hffbVmF4bf+D/ohyTSo"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: server Ok
+              examples:
+                Health:
+                  value:
+                    message: server Ok
   /api/auth/register:
     post:
       summary: Register
@@ -49,8 +131,57 @@ paths:
                   name: Andand
                   password: '123456'
       responses:
-        '200':
-          description: ''
+        '201':
+          description: Register
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '75'
+            Date:
+              schema:
+                type: string
+                example: Sun, 29 Mar 2026 21:41:03 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"4b-v3H5djvTi/gBR+c9iKg5m64PgCs"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created_at:
+                    type: string
+                    example: '2026-03-30T00:41:03.476Z'
+                  email:
+                    type: string
+                    example: a@a.com
+                  name:
+                    type: string
+                    example: Andand
+              examples:
+                Register:
+                  value:
+                    created_at: '2026-03-30T00:41:03.476Z'
+                    email: a@a.com
+                    name: Andand
   /api/auth/login:
     post:
       summary: Login
@@ -75,7 +206,64 @@ paths:
                   password: '123456'
       responses:
         '200':
-          description: ''
+          description: Login
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '318'
+            Date:
+              schema:
+                type: string
+                example: Sun, 29 Mar 2026 21:43:07 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"13e-qmg0FVIsmztEWkba/zxmEmzrLrQ"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: '{{vault:json-web-token}}'
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        example: a@a.com
+                      id:
+                        type: string
+                        example: 019d3b8b-1377-7718-8ee1-122f40c956d8
+                      name:
+                        type: string
+                        example: Andand
+              examples:
+                Login:
+                  value:
+                    access_token: '{{vault:json-web-token}}'
+                    user:
+                      email: a@a.com
+                      id: 019d3b8b-1377-7718-8ee1-122f40c956d8
+                      name: Andand
   /api/clients:
     get:
       summary: List Clients
@@ -83,7 +271,92 @@ paths:
       operationId: listClients
       responses:
         '200':
-          description: ''
+          description: List Clients
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '179'
+            Date:
+              schema:
+                type: string
+                example: Sun, 29 Mar 2026 21:43:37 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"b3-txWun1uc5+aSFeXlQyOvICCSZI0"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                          example: a@a.com
+                        name:
+                          type: string
+                          example: employee1
+                        publicId:
+                          type: string
+                          example: 019d3b8d-2b90-7f29-8e60-dee7c8aff20d
+                        salary:
+                          type: number
+                          example: 123123
+                        valuation:
+                          type: number
+                          example: 987765
+                    example:
+                      - email: a@a.com
+                        name: employee1
+                        publicId: 019d3b8d-2b90-7f29-8e60-dee7c8aff20d
+                        salary: 123123
+                        valuation: 987765
+                  limit:
+                    type: number
+                    example: 10
+                  page:
+                    type: number
+                    example: 1
+                  total:
+                    type: number
+                    example: 1
+                  totalPages:
+                    type: number
+                    example: 1
+              examples:
+                List Clients:
+                  value:
+                    data:
+                      - email: a@a.com
+                        name: employee1
+                        publicId: 019d3b8d-2b90-7f29-8e60-dee7c8aff20d
+                        salary: 123123
+                        valuation: 987765
+                    limit: 10
+                    page: 1
+                    total: 1
+                    totalPages: 1
       security:
         - bearerAuth: []
     post:
@@ -101,7 +374,7 @@ paths:
                   example: a@a.com
                 name:
                   type: string
-                  example: employee9
+                  example: employee1
                 salary:
                   type: number
                   example: 123123
@@ -112,15 +385,76 @@ paths:
               Create Client:
                 value:
                   email: a@a.com
-                  name: employee9
+                  name: employee1
                   salary: 123123
                   valuation: 987765
       responses:
-        '200':
-          description: ''
+        '201':
+          description: Create Client
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '131'
+            Date:
+              schema:
+                type: string
+                example: Sun, 29 Mar 2026 21:43:20 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"83-XA5bYe8mz/Mr92o3gM8ALJPgd/Q"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created_at:
+                    type: string
+                    example: '2026-03-30T00:43:20.719Z'
+                  deleted_at:
+                    nullable: true
+                    example: null
+                  email:
+                    type: string
+                    example: a@a.com
+                  name:
+                    type: string
+                    example: employee1
+                  salary:
+                    type: number
+                    example: 123123
+                  valuation:
+                    type: number
+                    example: 987765
+              examples:
+                Create Client:
+                  value:
+                    created_at: '2026-03-30T00:43:20.719Z'
+                    deleted_at: null
+                    email: a@a.com
+                    name: employee1
+                    salary: 123123
+                    valuation: 987765
       security:
         - bearerAuth: []
-  /api/clients/019d3694-774f-7ee9-aae3-9e6fd0569ef6:
+  /api/clients/{userId}:
     put:
       summary: Update Client
       description: Update Client
@@ -152,17 +486,154 @@ paths:
                   valuation: 987765
       responses:
         '200':
-          description: ''
+          description: Update Client
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '189'
+            Date:
+              schema:
+                type: string
+                example: Sun, 29 Mar 2026 21:48:27 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"bd-eqQkP7pCTYWD3hMRWU2zWzg3Aqs"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created_at:
+                    type: string
+                    example: '2026-03-30T00:43:20.719Z'
+                  deleted_at:
+                    nullable: true
+                    example: null
+                  email:
+                    type: string
+                    example: a@a.com
+                  id:
+                    type: number
+                    example: 1
+                  name:
+                    type: string
+                    example: employee2
+                  publicId:
+                    type: string
+                    example: 019d3b8d-2b90-7f29-8e60-dee7c8aff20d
+                  salary:
+                    type: number
+                    example: 1111111
+                  valuation:
+                    type: number
+                    example: 987765
+              examples:
+                Update Client:
+                  value:
+                    created_at: '2026-03-30T00:43:20.719Z'
+                    deleted_at: null
+                    email: a@a.com
+                    id: 1
+                    name: employee2
+                    publicId: 019d3b8d-2b90-7f29-8e60-dee7c8aff20d
+                    salary: 1111111
+                    valuation: 987765
       security:
         - bearerAuth: []
-  /api/clients/{userId}:
     delete:
       summary: Delete Client
       description: Delete Client
       operationId: deleteClient
       responses:
         '200':
-          description: ''
+          description: Delete Client
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '211'
+            Date:
+              schema:
+                type: string
+                example: Sun, 29 Mar 2026 21:48:41 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"d3-uuyzPLqhPEF4CIGKIHuVLV8LgTM"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created_at:
+                    type: string
+                    example: '2026-03-30T00:43:20.719Z'
+                  deleted_at:
+                    type: string
+                    example: '2026-03-30T00:48:41.919Z'
+                  email:
+                    type: string
+                    example: a@a.com
+                  id:
+                    type: number
+                    example: 1
+                  name:
+                    type: string
+                    example: employee2
+                  publicId:
+                    type: string
+                    example: 019d3b8d-2b90-7f29-8e60-dee7c8aff20d
+                  salary:
+                    type: number
+                    example: 1111111
+                  valuation:
+                    type: number
+                    example: 987765
+              examples:
+                Delete Client:
+                  value:
+                    created_at: '2026-03-30T00:43:20.719Z'
+                    deleted_at: '2026-03-30T00:48:41.919Z'
+                    email: a@a.com
+                    id: 1
+                    name: employee2
+                    publicId: 019d3b8d-2b90-7f29-8e60-dee7c8aff20d
+                    salary: 1111111
+                    valuation: 987765
       security:
         - bearerAuth: []
     parameters:

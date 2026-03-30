@@ -9,7 +9,7 @@ interface User {
   publicId: string;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
   user: User | null;
   token: string | null;
   login: (token: string, user: User) => void;

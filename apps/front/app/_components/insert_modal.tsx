@@ -6,9 +6,14 @@ import toast from 'react-hot-toast';
 interface SideNavProps {
   isOpen: boolean;
   onClose: () => void;
+  'data-testid': string;
 }
 
-const InsertModal = ({ isOpen, onClose }: SideNavProps) => {
+const InsertModal = ({
+  isOpen,
+  onClose,
+  'data-testid': testId,
+}: SideNavProps) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [salary, setSalary] = useState(0);
@@ -56,6 +61,7 @@ const InsertModal = ({ isOpen, onClose }: SideNavProps) => {
       <div
         className="relative w-full max-w-md z-50 rounded-md bg-white p-6 shadow-lg"
         onClick={(e) => e.stopPropagation()}
+        data-testid={testId}
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-900">Criar cliente:</h2>

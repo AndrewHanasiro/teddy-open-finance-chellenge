@@ -164,6 +164,7 @@ export default function ClientListPage() {
                   }}
                 />
                 <Trash2
+                  aria-label="Trash2"
                   size={18}
                   className="text-red-400 hover:text-red-600 cursor-pointer"
                   onClick={() => deleteClient(client.publicId)}
@@ -202,6 +203,7 @@ export default function ClientListPage() {
         </div>
       </main>
       <InsertModal
+        data-testid="Criar Client"
         isOpen={isInsertModalOpen}
         onClose={() => setIsInsertModalOpen(false)}
       />
