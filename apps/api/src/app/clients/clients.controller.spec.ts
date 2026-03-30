@@ -3,6 +3,7 @@ import { ClientsController } from './clients.controller';
 import { ClientsService } from './clients.service';
 import { ClientDto, PaginationDto } from './clients.dto';
 import { randEmail, randFullName, randAmount, randUuid } from '@ngneat/falso';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 describe('ClientsController', () => {
   let controller: ClientsController;
@@ -33,6 +34,13 @@ describe('ClientsController', () => {
         {
           provide: ClientsService,
           useValue: mockService,
+        },
+        {
+          provide: CACHE_MANAGER,
+          useValue: {
+            get: jest.fn(),
+            set: jest.fn(),
+          },
         },
       ],
     }).compile();
