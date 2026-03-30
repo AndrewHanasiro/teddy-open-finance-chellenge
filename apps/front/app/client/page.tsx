@@ -157,6 +157,7 @@ export default function ClientListPage() {
                 )}
                 <Pencil
                   size={18}
+                  data-testid={`${client.email}-edit`}
                   className="text-gray-400 hover:text-orange-500 cursor-pointer"
                   onClick={() => {
                     setSelectClient(client);
@@ -203,7 +204,7 @@ export default function ClientListPage() {
         </div>
       </main>
       <InsertModal
-        data-testid="Criar Client"
+        data-testid="insert-client-modal"
         isOpen={isInsertModalOpen}
         onClose={() => setIsInsertModalOpen(false)}
       />
@@ -212,6 +213,7 @@ export default function ClientListPage() {
           isOpen={isUpdateModalOpen}
           onClose={() => setIsUpdateModalOpen(false)}
           input={{
+            publicId: selectClient.publicId,
             email: selectClient.email,
             name: selectClient.name,
             salary: selectClient.salary,

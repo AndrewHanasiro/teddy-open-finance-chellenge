@@ -39,7 +39,7 @@ describe('InsertModal Component', () => {
       screen.getByPlaceholderText(/Digite o valor da empresa:/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /Criar cliente/i }),
+      screen.getByRole('button', { name: /Cadastrar/i }),
     ).toBeInTheDocument();
   });
 
@@ -80,7 +80,7 @@ describe('InsertModal Component', () => {
       { target: { value: '5000' } },
     );
 
-    fireEvent.click(screen.getByRole('button', { name: /Criar cliente/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Cadastrar/i }));
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
@@ -109,7 +109,7 @@ describe('InsertModal Component', () => {
 
     render(<InsertModal {...defaultProps} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /Criar cliente/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Cadastrar/i }));
 
     await waitFor(() => {
       expect(toast).toHaveBeenCalledWith(errorMessage);

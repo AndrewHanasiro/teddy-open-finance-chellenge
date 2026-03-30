@@ -33,8 +33,8 @@ const InsertModal = ({
         body: JSON.stringify({
           email,
           name,
-          salary: salary * 100,
-          valuation: valuation * 100,
+          salary: Math.round(salary * 100),
+          valuation: Math.round(valuation * 100),
         }),
       });
 
@@ -120,7 +120,7 @@ const InsertModal = ({
             type="submit"
             className="mt-2 w-full rounded bg-[#f27131] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e06328] active:scale-[0.98]"
           >
-            Criar cliente
+            Cadastrar
           </button>
         </form>
       </div>

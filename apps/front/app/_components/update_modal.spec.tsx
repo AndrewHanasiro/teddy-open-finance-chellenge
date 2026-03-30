@@ -69,7 +69,7 @@ describe('UpdateModal Component', () => {
     const salaryInput = screen.getByPlaceholderText(/Digite o salário:/i);
     fireEvent.change(salaryInput, { target: { value: '6000' } });
 
-    fireEvent.click(screen.getByRole('button', { name: /Atualizar cliente/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Atualizar/i }));
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
@@ -102,7 +102,7 @@ describe('UpdateModal Component', () => {
 
     render(<UpdateModal {...defaultProps} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /Atualizar cliente/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Atualizar/i }));
 
     await waitFor(() => {
       expect(toast).toHaveBeenCalledWith(errorMsg);

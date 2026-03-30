@@ -128,6 +128,6 @@ describe('ClientListPage', () => {
     const createBtn = screen.getByRole('button', { name: /Criar cliente/i });
     fireEvent.click(createBtn);
 
-    expect(await screen.findByTestId('Criar Client')).toBeInTheDocument();
+    expect(await screen.findByTestId('insert-client-modal')).toBeInTheDocument();
   });
 });

@@ -9,8 +9,10 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from '../../entities/user.entity';
 import { LoginDto } from './auth.dto';
+import { Traceable } from 'nestjs-otel';
 
 @Injectable()
+@Traceable()
 export class AuthService {
   constructor(
     @InjectRepository(User)

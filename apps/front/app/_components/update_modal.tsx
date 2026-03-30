@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 interface SideNavProps {
   isOpen: boolean;
   input: {
+    publicId: string;
     name: string;
     email: string;
     salary: number;
@@ -25,19 +26,22 @@ const UpdateModal = ({ isOpen, onClose, input }: SideNavProps) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/api/clients', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `http://localhost:3000/api/clients/${input.publicId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            email,
+            name,
+            salary: salary * 100,
+            valuation: valuation * 100,
+          }),
         },
-        body: JSON.stringify({
-          email,
-          name,
-          salary: salary * 100,
-          valuation: valuation * 100,
-        }),
-      });
+      );
 
       if (response.ok) {
         setEmail('');
@@ -49,8 +53,10 @@ const UpdateModal = ({ isOpen, onClose, input }: SideNavProps) => {
         const data = await response.json();
         toast(data.message || 'Failed to add client');
       }
-    } catch (err){
-      toast(`An error occurred while updating client: ${(err as Error).message}`);
+    } catch (err) {
+      toast(
+        `An error occurred while updating client: ${(err as Error).message}`,
+      );
     }
   };
   if (!isOpen) return null;
@@ -64,7 +70,7 @@ const UpdateModal = ({ isOpen, onClose, input }: SideNavProps) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-900">Criar cliente:</h2>
+          <h2 className="text-lg font-bold text-gray-900">Atualizar cliente</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 transition-colors"
@@ -120,7 +126,7 @@ const UpdateModal = ({ isOpen, onClose, input }: SideNavProps) => {
             type="submit"
             className="mt-2 w-full rounded bg-[#f27131] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e06328] active:scale-[0.98]"
           >
-            Atualizar cliente
+            Atualizar
           </button>
         </form>
       </div>

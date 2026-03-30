@@ -24,7 +24,6 @@ const SideNav = ({ isOpen, onClose, logout }: SideNavProps) => {
       active: pathname === '/client/select',
       action: () => route.push('/client/select'),
     },
-    { name: 'Logout', icon: LogOut, active: false, action: () => logout() },
   ];
   if (!isOpen) return null;
   return (
@@ -93,8 +92,15 @@ const SideNav = ({ isOpen, onClose, logout }: SideNavProps) => {
               )}
             </a>
           ))}
+          <a
+            id="logout"
+            className={`group relative flex items-center gap-4 rounded-lg py-2 transition-colors text-black hover:text-[#FF7A45]`}
+            onClick={() => logout()}
+          >
+            <LogOut size={22} strokeWidth={2} />
+            <span className={`text-lg font-semibold opacity-90`}>Logout</span>
+          </a>
         </nav>
-
         <div className="mt-auto h-24 w-full rounded-2xl bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.05)] border border-gray-50" />
       </div>
     </>

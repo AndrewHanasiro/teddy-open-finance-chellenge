@@ -3,7 +3,7 @@ import { nxE2EPreset } from '@nx/playwright/preset';
 import { workspaceRoot } from '@nx/devkit';
 
 // For CI, you may want to set BASE_URL to the deployed application.
-const baseURL = process.env['BASE_URL'] || 'http://localhost:3000';
+const baseURL = process.env['BASE_URL'] || 'http://localhost:5173';
 
 /**
  * Read environment variables from file.
@@ -21,11 +21,16 @@ export default defineConfig({
     baseURL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    // Remove this comment below if you want to se the test running in browser
+    // headless: false,
+    // launchOptions: {
+    //   slowMo: 500,// Optional: slows down operations by 500ms so you can actually follow along
+    // },
   },
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npx nx run front:dev',
-    url: 'http://localhost:3000',
+    url: 'http://localhost:5173',
     reuseExistingServer: true,
     cwd: workspaceRoot,
   },
@@ -40,10 +45,10 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     // Uncomment for mobile browsers support
     /* {
